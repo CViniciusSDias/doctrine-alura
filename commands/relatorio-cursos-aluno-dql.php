@@ -12,13 +12,8 @@ $em = (new EntityManagerFactory())->getEntityManager();
 $stack = new DebugStack();
 $em->getConnection()->getConfiguration()->setSQLLogger($stack);
 
-$query = $em->createQueryBuilder()
-    ->select('a', 'c')
-    ->from(Aluno::class, 'a')
-    ->join('a.cursos', 'c')
-    ->getQuery();
 /** @var Aluno[] $alunoList */
-$alunoList = $query->getResult();
+$alunoList = $em->getRepository(Aluno::class)->cursosPorAluno();
 
 foreach ($alunoList as $aluno) {
     /** @var Curso[] $cursos */
